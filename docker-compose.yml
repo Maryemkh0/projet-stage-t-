@@ -1,83 +1,47 @@
 version: "3.8"
 
 services:
-  app:
-    build: .
-    ports:
-      - "8081:8081"
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/clientsdb
-    depends_on:
-      - db
-    networks:
-      - cicd_network
-
+  # Base de données PostgreSQL
   db:
     image: postgres:15-alpine
+    container_name: cicd-postgres
     environment:
-      - POSTGRES_DB=clientsdb
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      POSTGRES_DB: clientsdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
       - cicd_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  sonarqube:
-    image: sonarqube:9.9.1-community
+  # Application Spring Boot
+  app:
+    build: .
+    container_name: cicd-ai-app
     ports:
-      - "9000:9000"
+      - "8081:8081"
     environment:
-      - SONAR_FORCEAUTHENTICATION=false
-    volumes:
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-      - sonarqube_logs:/opt/sonarqube/logs
-    networks:
-      - cicd_network
-
-  jenkins:
-    image: jenkins/jenkins:lts-jdk17
-    user: root
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-      # Access host Docker daemon for Docker inside Jenkins
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - cicd_network
-
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    networks:
-      - cicd_network
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/clientsdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
-      - prometheus
+      db:
+        condition: service_healthy
     networks:
       - cicd_network
 
 volumes:
   pgdata:
-  sonarqube_data:
-  sonarqube_extensions:
-  sonarqube_logs:
-  jenkins_home:
 
 networks:
   cicd_network:

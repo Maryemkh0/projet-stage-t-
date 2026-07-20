@@ -3,300 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevOps Intelligence - Dashboard</title>
+    <title>DevOps Intelligence - Control Center</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Navbar SaaS -->
     <nav class="navbar">
         <div class="logo">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <defs>
-                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#00f2fe;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#4facfe;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="glow-icon">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
-            <span>DevOps AI</span>
+            <span>DevOps<span class="text-gradient">AI</span> Platform</span>
         </div>
         <div class="nav-links">
-            <a href="index.html" class="active">Dashboard CI/CD</a>
-            <a href="clients.html">Gestion Clients</a>
+            <a href="index.html" class="active">Mission Control</a>
+            <a href="clients.html">Environnements</a>
+            <div class="user-avatar">AD</div>
         </div>
     </nav>
 
-    <main class="container">
+    <main class="dashboard-grid">
         
-        <div class="two-columns">
-            <!-- Panneau de sélection des erreurs (Test du mécanisme) -->
-            <section class="glass-card fade-in">
-                <h2>Simulateur d'Erreurs CI/CD</h2>
-                <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
-                    Cochez le type d'erreur que vous souhaitez injecter dans le pipeline pour tester le mécanisme de diagnostic par l'IA.
-                </p>
-
-                <div class="error-selection">
-                    <label class="radio-card">
-                        <input type="radio" name="errorType" value="success" checked>
-                        <div class="radio-content">
-                            <span class="icon">✅</span>
-                            <div class="text">
-                                <strong>Aucune erreur (Succès)</strong>
-                                <span class="desc">Déploiement parfait de bout en bout.</span>
-                            </div>
+        <!-- SECTION 1 : SÉLECTION DES SCÉNARIOS -->
+        <section class="panel glass-panel scenario-panel">
+            <div class="panel-header">
+                <h2>Simulateur de Scénarios</h2>
+                <p>Sélectionnez une ou plusieurs défaillances à injecter dans le pipeline.</p>
+            </div>
+            
+            <div class="scenario-list">
+                <!-- Option 1 : Test unitaire (Faible) -->
+                <label class="scenario-card">
+                    <input type="checkbox" name="scenario" value="test">
+                    <div class="card-content">
+                        <div class="card-icon">🧪</div>
+                        <div class="card-text">
+                            <h4>Test Unitaire Cassé</h4>
+                            <p>Test secondaire (Formatage de date)</p>
                         </div>
-                    </label>
+                        <span class="badge badge-low" style="background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3);">Faible</span>
+                    </div>
+                </label>
 
-                    <label class="radio-card">
-                        <input type="radio" name="errorType" value="compile">
-                        <div class="radio-content">
-                            <span class="icon">☕</span>
-                            <div class="text">
-                                <strong>Erreur de Compilation (Java)</strong>
-                                <span class="desc">Point-virgule manquant dans le Controller.</span>
-                            </div>
+                <!-- Option 2 : Sonar Code Smell (Faible) -->
+                <label class="scenario-card">
+                    <input type="checkbox" name="scenario" value="sonar_smell">
+                    <div class="card-content">
+                        <div class="card-icon">🧹</div>
+                        <div class="card-text">
+                            <h4>Warning SonarQube</h4>
+                            <p>Code smell (Variable non utilisée)</p>
                         </div>
-                    </label>
+                        <span class="badge badge-low" style="background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3);">Faible</span>
+                    </div>
+                </label>
 
-                    <label class="radio-card">
-                        <input type="radio" name="errorType" value="test">
-                        <div class="radio-content">
-                            <span class="icon">🧪</span>
-                            <div class="text">
-                                <strong>Échec des Tests Unitaires</strong>
-                                <span class="desc">NullPointerException détecté.</span>
-                            </div>
+                <!-- Option 3 : Docker (Moyenne) -->
+                <label class="scenario-card">
+                    <input type="checkbox" name="scenario" value="docker">
+                    <div class="card-content">
+                        <div class="card-icon">🐳</div>
+                        <div class="card-text">
+                            <h4>Échec Build Docker</h4>
+                            <p>Erreur configuration (Dockerfile mal écrit)</p>
                         </div>
-                    </label>
+                        <span class="badge badge-medium" style="background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3);">Moyenne</span>
+                    </div>
+                </label>
 
-                    <label class="radio-card">
-                        <input type="radio" name="errorType" value="sonar">
-                        <div class="radio-content">
-                            <span class="icon">🛡️</span>
-                            <div class="text">
-                                <strong>Quality Gate SonarQube</strong>
-                                <span class="desc">Vulnérabilité de sécurité critique (Mot de passe en dur).</span>
-                            </div>
+                <!-- Option 4 : Sonar Faille (Critique) -->
+                <label class="scenario-card">
+                    <input type="checkbox" name="scenario" value="sonar_sec">
+                    <div class="card-content">
+                        <div class="card-icon">🛡️</div>
+                        <div class="card-text">
+                            <h4>Quality Gate Bloqué</h4>
+                            <p>Vulnérabilité (Mot de passe en dur)</p>
                         </div>
-                    </label>
+                        <span class="badge badge-critical" style="background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3);">Critique</span>
+                    </div>
+                </label>
 
-                    <label class="radio-card">
-                        <input type="radio" name="errorType" value="deploy">
-                        <div class="radio-content">
-                            <span class="icon">🐳</span>
-                            <div class="text">
-                                <strong>Échec au Déploiement</strong>
-                                <span class="desc">Connexion refusée à la base de données PostgreSQL.</span>
-                            </div>
+                <!-- Option 5 : BDD (Critique) -->
+                <label class="scenario-card">
+                    <input type="checkbox" name="scenario" value="deploy">
+                    <div class="card-content">
+                        <div class="card-icon">🚀</div>
+                        <div class="card-text">
+                            <h4>Échec Déploiement</h4>
+                            <p>Connexion base de données refusée</p>
                         </div>
-                    </label>
+                        <span class="badge badge-critical" style="background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3);">Critique</span>
+                    </div>
+                </label>
+            </div>
+        </section>
+
+        <div class="main-column">
+            <!-- SECTION 2 & 3 : CONTRÔLE ET CYCLE DEVOPS -->
+            <section class="panel glass-panel pipeline-panel">
+                <div class="pipeline-header">
+                    <div class="pipeline-info">
+                        <h2>Déploiement #1042</h2>
+                        <div class="status-badge" id="global-status">
+                            <span class="dot"></span>
+                            <span id="status-text">Prêt</span>
+                        </div>
+                    </div>
+                    <div class="pipeline-actions">
+                        <span class="timer" id="pipeline-timer">00:00s</span>
+                        <span class="selection-count" id="selection-count">0 erreur(s)</span>
+                        <button class="btn btn-primary" id="btn-start" onclick="togglePipeline()">Lancer le pipeline</button>
+                    </div>
                 </div>
 
-                <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem; justify-content: center; font-size: 1.1rem;" onclick="startSimulation()">
-                    ▶ Lancer le Pipeline CI/CD
-                </button>
+                <!-- Barre de progression -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="main-progress"></div>
+                </div>
+
+                <!-- Frise DevOps -->
+                <div class="devops-cycle">
+                    <div class="node" id="node-checkout">
+                        <div class="node-icon">📦</div>
+                        <span>Checkout</span>
+                    </div>
+                    <div class="edge" id="edge-checkout"></div>
+                    
+                    <div class="node" id="node-compile">
+                        <div class="node-icon">⚙️</div>
+                        <span>Build</span>
+                    </div>
+                    <div class="edge" id="edge-compile"></div>
+                    
+                    <div class="node" id="node-test">
+                        <div class="node-icon">🧪</div>
+                        <span>Test</span>
+                    </div>
+                    <div class="edge" id="edge-test"></div>
+                    
+                    <div class="node" id="node-sonar">
+                        <div class="node-icon">📊</div>
+                        <span>Qualité</span>
+                    </div>
+                    <div class="edge" id="edge-sonar"></div>
+                    
+                    <div class="node" id="node-docker">
+                        <div class="node-icon">🐳</div>
+                        <span>Package</span>
+                    </div>
+                    <div class="edge" id="edge-docker"></div>
+                    
+                    <div class="node" id="node-deploy">
+                        <div class="node-icon">🚀</div>
+                        <span>Deploy</span>
+                    </div>
+                </div>
             </section>
 
-            <!-- Vue du Cycle DevOps -->
-            <section class="glass-card fade-in" style="animation-delay: 0.2s;">
-                <h2>État du Pipeline</h2>
-                
-                <div class="pipeline-tracker-vertical">
-                    <div class="step-v" id="step-checkout">
-                        <div class="step-icon-v">1</div>
-                        <div class="step-content-v">
-                            <strong>Checkout du code</strong>
-                            <span class="status-text">En attente</span>
+            <!-- HISTORIQUE DES DÉPLOIEMENTS -->
+            <section class="panel glass-panel history-panel" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                <div class="panel-header">
+                    <h2>Historique des Déploiements</h2>
+                    <p>Journal d'exécution de la chaîne CI/CD et état des résolutions.</p>
+                </div>
+                <div class="table-container" style="padding: 1rem 1.5rem; overflow-x: auto;">
+                    <table class="build-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--border-subtle);">
+                                <th style="padding: 0.75rem 0.5rem; color: var(--text-muted); font-weight: 500; font-size: 0.85rem; width: 100px;">Build</th>
+                                <th style="padding: 0.75rem 0.5rem; color: var(--text-muted); font-weight: 500; font-size: 0.85rem; width: 150px;">Date / Heure</th>
+                                <th style="padding: 0.75rem 0.5rem; color: var(--text-muted); font-weight: 500; font-size: 0.85rem;">Scénarios Testés</th>
+                                <th style="padding: 0.75rem 0.5rem; color: var(--text-muted); font-weight: 500; font-size: 0.85rem; width: 150px;">Statut</th>
+                                <th style="padding: 0.75rem 0.5rem; color: var(--text-muted); font-weight: 500; font-size: 0.85rem; width: 120px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="build-history-body">
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.02);" id="build-1041">
+                                <td style="padding: 0.75rem 0.5rem; font-family: monospace; font-size: 0.9rem;">#1041</td>
+                                <td style="padding: 0.75rem 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Il y a 5 min</td>
+                                <td style="padding: 0.75rem 0.5rem; font-size: 0.85rem;">Warning SonarQube</td>
+                                <td style="padding: 0.75rem 0.5rem;"><span class="badge" style="background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.2);">Succès</span></td>
+                                <td style="padding: 0.75rem 0.5rem; font-size: 0.85rem; color: var(--text-muted);">-</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.02);" id="build-1040">
+                                <td style="padding: 0.75rem 0.5rem; font-family: monospace; font-size: 0.9rem;">#1040</td>
+                                <td style="padding: 0.75rem 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Il y a 12 min</td>
+                                <td style="padding: 0.75rem 0.5rem; font-size: 0.85rem;">Quality Gate Bloqué (Vulnerability)</td>
+                                <td style="padding: 0.75rem 0.5rem;"><span class="badge" style="background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2);">Échec</span></td>
+                                <td style="padding: 0.75rem 0.5rem;"><button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="showPastDiagnostic('sonar_sec')">Diag. IA</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            <!-- SECTION 4 : DIAGNOSTIC IA -->
+            <section class="panel glass-panel ai-panel" id="ai-panel">
+                <div class="ai-header">
+                    <div class="ai-title">
+                        <svg class="ai-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        <h3>Diagnostic IA Gemini</h3>
+                    </div>
+                    <span class="badge" id="ai-severity">Analyse en cours...</span>
+                </div>
+
+                <!-- Loading State (Shimmer Effect) -->
+                <div class="ai-loading" id="ai-loading">
+                    <div class="shimmer-line title"></div>
+                    <div class="shimmer-line"></div>
+                    <div class="shimmer-line"></div>
+                    <div class="shimmer-line short"></div>
+                </div>
+
+                <!-- Result State -->
+                <div class="ai-result" id="ai-result">
+                    <div class="ai-section">
+                        <h4>Cause de l'erreur</h4>
+                        <p id="ai-cause">L'erreur s'est produite lors de la compilation...</p>
+                    </div>
+                    
+                    <div class="ai-section">
+                        <h4>Fichier concerné</h4>
+                        <div class="file-tag">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                            <span id="ai-file">ClientController.java</span>
                         </div>
                     </div>
                     
-                    <div class="step-v" id="step-compile">
-                        <div class="step-icon-v">2</div>
-                        <div class="step-content-v">
-                            <strong>Compilation (Maven)</strong>
-                            <span class="status-text">En attente</span>
+                    <div class="ai-section solution-section">
+                        <h4><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Solution proposée</h4>
+                        <div class="code-block" id="ai-solution">
+                            // Code solution
                         </div>
                     </div>
-                    
-                    <div class="step-v" id="step-test">
-                        <div class="step-icon-v">3</div>
-                        <div class="step-content-v">
-                            <strong>Tests Unitaires</strong>
-                            <span class="status-text">En attente</span>
-                        </div>
-                    </div>
-                    
-                    <div class="step-v" id="step-sonar">
-                        <div class="step-icon-v">4</div>
-                        <div class="step-content-v">
-                            <strong>Analyse SonarQube</strong>
-                            <span class="status-text">En attente</span>
-                        </div>
-                    </div>
-                    
-                    <div class="step-v" id="step-docker">
-                        <div class="step-icon-v">5</div>
-                        <div class="step-content-v">
-                            <strong>Build Docker</strong>
-                            <span class="status-text">En attente</span>
-                        </div>
-                    </div>
-                    
-                    <div class="step-v" id="step-deploy">
-                        <div class="step-icon-v">6</div>
-                        <div class="step-content-v">
-                            <strong>Déploiement & Démarrage</strong>
-                            <span class="status-text">En attente</span>
-                        </div>
+
+                    <div class="ai-actions">
+                        <button class="btn btn-secondary" onclick="copySolution()">Copier la solution</button>
+                        <button class="btn btn-primary" onclick="resolveError()">Marquer comme résolu</button>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <!-- Overlay IA (Flottant) -->
-    <div class="ai-overlay" id="ai-overlay">
-        <div class="ai-modal glass-card">
-            <div class="ai-header">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <svg class="ai-pulse" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff0844" stroke-width="2">
-                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                    </svg>
-                    <h2 style="margin: 0; color: white;">Diagnostic IA (Gemini)</h2>
-                </div>
-                <button class="close-btn" onclick="closeAIModal()">×</button>
-            </div>
-            
-            <div class="ai-body" id="ai-body-content">
-                <!-- Rempli par JS -->
-                <div class="ai-loader">Analyse des logs en cours par l'IA...</div>
-            </div>
-        </div>
-    </div>
-
     <script src="app.js"></script>
-    <style>
-        /* Styles additionnels spécifiques au nouveau layout vertical */
-        .radio-card {
-            display: block;
-            margin-bottom: 1rem;
-            cursor: pointer;
-        }
-        .radio-card input[type="radio"] {
-            display: none;
-        }
-        .radio-content {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            transition: all 0.3s;
-        }
-        .radio-card input[type="radio"]:checked + .radio-content {
-            background: rgba(79, 172, 254, 0.1);
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(79, 172, 254, 0.2);
-        }
-        .radio-content .icon {
-            font-size: 1.5rem;
-            margin-right: 1rem;
-        }
-        .radio-content .text {
-            display: flex;
-            flex-direction: column;
-        }
-        .radio-content .desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .pipeline-tracker-vertical {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            margin-top: 1rem;
-        }
-        .step-v {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            position: relative;
-            padding-bottom: 2rem;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-        .step-v:last-child {
-            padding-bottom: 0;
-        }
-        .step-v::before {
-            content: '';
-            position: absolute;
-            left: 17px;
-            top: 35px;
-            bottom: 0;
-            width: 2px;
-            background: rgba(255,255,255,0.1);
-            z-index: 0;
-        }
-        .step-v:last-child::before {
-            display: none;
-        }
-        .step-icon-v {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--bg-dark);
-            border: 2px solid var(--text-muted);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 700;
-            z-index: 1;
-            transition: all 0.3s;
-        }
-        .step-content-v {
-            display: flex;
-            flex-direction: column;
-            margin-top: 6px;
-        }
-        .status-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-        
-        /* Status styles */
-        .step-v.running { opacity: 1; }
-        .step-v.running .step-icon-v {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px var(--primary);
-            animation: pulse 1.5s infinite;
-        }
-        .step-v.running .status-text { color: var(--primary); }
-        
-        .step-v.success { opacity: 1; }
-        .step-v.success .step-icon-v {
-            border-color: var(--success);
-            background: var(--success);
-            color: #000;
-        }
-        .step-v.success .status-text { color: var(--success); }
-        .step-v.success::before { background: var(--success); }
-        
-        .step-v.fail { opacity: 1; }
-        .step-v.fail .step-icon-v {
-            border-color: var(--danger);
-            background: var(--danger);
-            color: #fff;
-            box-shadow: 0 0 20px var(--danger);
-            animation: shake 0.5s;
-        }
-        .step-v.fail .status-text { color: var(--danger); font-weight: bold; }
-    </style>
 </body>
 </html>
