@@ -3,357 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Plateforme d'automatisation CI/CD intelligente de CODIX avec analyse IA des erreurs de déploiement. Compilation, tests, SonarQube, Docker, déploiement et surveillance automatisés.">
-    <meta name="keywords" content="CI/CD, DevOps, Intelligence Artificielle, Gemini, Docker, SonarQube, Maven, Spring Boot, CODIX">
-    <meta name="author" content="CODIX - Stagiaire DevOps">
-    <meta name="theme-color" content="#7c4dff">
-    <title>CODIX DevOps - Plateforme CI/CD Intelligente avec Analyse IA</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- marked.js pour le rendu Markdown de l'IA -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Custom Style Sheet -->
+    <title>DevOps Intelligence - Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="app-container">
+    <nav class="navbar">
+        <div class="logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#00f2fe;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#4facfe;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            <span>DevOps AI</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="active">Dashboard CI/CD</a>
+            <a href="clients.html">Gestion Clients</a>
+        </div>
+    </nav>
+
+    <main class="container">
         
-        <!-- Header -->
-        <header class="main-header">
-            <div class="logo-area">
-                <div class="logo-icon">
-                    <i class="fa-solid fa-microchip-ascii"></i>
+        <div class="two-columns">
+            <!-- Panneau de sélection des erreurs (Test du mécanisme) -->
+            <section class="glass-card fade-in">
+                <h2>Simulateur d'Erreurs CI/CD</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    Cochez le type d'erreur que vous souhaitez injecter dans le pipeline pour tester le mécanisme de diagnostic par l'IA.
+                </p>
+
+                <div class="error-selection">
+                    <label class="radio-card">
+                        <input type="radio" name="errorType" value="success" checked>
+                        <div class="radio-content">
+                            <span class="icon">✅</span>
+                            <div class="text">
+                                <strong>Aucune erreur (Succès)</strong>
+                                <span class="desc">Déploiement parfait de bout en bout.</span>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="radio-card">
+                        <input type="radio" name="errorType" value="compile">
+                        <div class="radio-content">
+                            <span class="icon">☕</span>
+                            <div class="text">
+                                <strong>Erreur de Compilation (Java)</strong>
+                                <span class="desc">Point-virgule manquant dans le Controller.</span>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="radio-card">
+                        <input type="radio" name="errorType" value="test">
+                        <div class="radio-content">
+                            <span class="icon">🧪</span>
+                            <div class="text">
+                                <strong>Échec des Tests Unitaires</strong>
+                                <span class="desc">NullPointerException détecté.</span>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="radio-card">
+                        <input type="radio" name="errorType" value="sonar">
+                        <div class="radio-content">
+                            <span class="icon">🛡️</span>
+                            <div class="text">
+                                <strong>Quality Gate SonarQube</strong>
+                                <span class="desc">Vulnérabilité de sécurité critique (Mot de passe en dur).</span>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="radio-card">
+                        <input type="radio" name="errorType" value="deploy">
+                        <div class="radio-content">
+                            <span class="icon">🐳</span>
+                            <div class="text">
+                                <strong>Échec au Déploiement</strong>
+                                <span class="desc">Connexion refusée à la base de données PostgreSQL.</span>
+                            </div>
+                        </div>
+                    </label>
                 </div>
-                <div class="logo-text">
-                    <h1>CODIX <span>DevOps</span></h1>
-                    <p>Plateforme CI/CD Intelligente</p>
-                </div>
-            </div>
-            
-            <div class="header-actions">
-                <div class="status-badge-container">
-                    <span class="badge-label">Statut Global:</span>
-                    <span id="global-status" class="status-badge idle">
-                        <span class="pulse-dot"></span>
-                        <span class="status-text">En attente</span>
-                    </span>
-                </div>
-                
-                <button id="btn-config-key" class="btn secondary">
-                    <i class="fa-solid fa-key"></i> Clé Gemini API
+
+                <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem; justify-content: center; font-size: 1.1rem;" onclick="startSimulation()">
+                    ▶ Lancer le Pipeline CI/CD
                 </button>
-            </div>
-        </header>
+            </section>
 
-        <!-- Main Content Layout -->
-        <main class="dashboard-grid">
+            <!-- Vue du Cycle DevOps -->
+            <section class="glass-card fade-in" style="animation-delay: 0.2s;">
+                <h2>État du Pipeline</h2>
+                
+                <div class="pipeline-tracker-vertical">
+                    <div class="step-v" id="step-checkout">
+                        <div class="step-icon-v">1</div>
+                        <div class="step-content-v">
+                            <strong>Checkout du code</strong>
+                            <span class="status-text">En attente</span>
+                        </div>
+                    </div>
+                    
+                    <div class="step-v" id="step-compile">
+                        <div class="step-icon-v">2</div>
+                        <div class="step-content-v">
+                            <strong>Compilation (Maven)</strong>
+                            <span class="status-text">En attente</span>
+                        </div>
+                    </div>
+                    
+                    <div class="step-v" id="step-test">
+                        <div class="step-icon-v">3</div>
+                        <div class="step-content-v">
+                            <strong>Tests Unitaires</strong>
+                            <span class="status-text">En attente</span>
+                        </div>
+                    </div>
+                    
+                    <div class="step-v" id="step-sonar">
+                        <div class="step-icon-v">4</div>
+                        <div class="step-content-v">
+                            <strong>Analyse SonarQube</strong>
+                            <span class="status-text">En attente</span>
+                        </div>
+                    </div>
+                    
+                    <div class="step-v" id="step-docker">
+                        <div class="step-icon-v">5</div>
+                        <div class="step-content-v">
+                            <strong>Build Docker</strong>
+                            <span class="status-text">En attente</span>
+                        </div>
+                    </div>
+                    
+                    <div class="step-v" id="step-deploy">
+                        <div class="step-icon-v">6</div>
+                        <div class="step-content-v">
+                            <strong>Déploiement & Démarrage</strong>
+                            <span class="status-text">En attente</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Overlay IA (Flottant) -->
+    <div class="ai-overlay" id="ai-overlay">
+        <div class="ai-modal glass-card">
+            <div class="ai-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <svg class="ai-pulse" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff0844" stroke-width="2">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    <h2 style="margin: 0; color: white;">Diagnostic IA (Gemini)</h2>
+                </div>
+                <button class="close-btn" onclick="closeAIModal()">×</button>
+            </div>
             
-            <!-- Left Panel: Pipeline Control & Demo Simulation -->
-            <section class="panel control-panel glass">
-                <div class="panel-header">
-                    <h2><i class="fa-solid fa-sliders"></i> Console de Contrôle</h2>
-                </div>
-                
-                <!-- Pipeline Triggers -->
-                <div class="control-group action-buttons">
-                    <button id="btn-run-pipeline" class="btn primary large">
-                        <i class="fa-solid fa-play"></i> Lancer le Pipeline
-                    </button>
-                    <button id="btn-reset-pipeline" class="btn danger">
-                        <i class="fa-solid fa-arrow-rotate-left"></i> Réinitialiser
-                    </button>
-                </div>
-
-                <!-- Simulation Settings (The WOW feature for demo) -->
-                <div class="panel-divider"></div>
-                
-                <div class="panel-header">
-                    <h2><i class="fa-solid fa-bug"></i> Simulateur d'Incidents</h2>
-                    <span class="subtitle">Forcer des échecs réels pour tester l'IA</span>
-                </div>
-
-                <div class="simulation-switches">
-                    <div class="switch-item">
-                        <div class="switch-text">
-                            <span class="switch-title">Échec Compilation</span>
-                            <span class="switch-desc">Injecte un code Java invalide</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="sim-compilation">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="switch-item">
-                        <div class="switch-text">
-                            <span class="switch-title">Échec des Tests</span>
-                            <span class="switch-desc">Injecte un test JUnit défaillant</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="sim-tests">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="switch-item">
-                        <div class="switch-text">
-                            <span class="switch-title">Échec SonarQube</span>
-                            <span class="switch-desc">Cible un serveur inexistant</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="sim-sonarqube">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="switch-item">
-                        <div class="switch-text">
-                            <span class="switch-title">Échec Docker Build</span>
-                            <span class="switch-desc">Utilise un Dockerfile défaillant</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="sim-docker">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="switch-item">
-                        <div class="switch-text">
-                            <span class="switch-title">Échec Déploiement</span>
-                            <span class="switch-desc">Livre avec des flags Docker invalides</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="sim-deploy">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="switch-item">
-                        <div class="switch-text">
-                            <span class="switch-title">Échec Surveillance</span>
-                            <span class="switch-desc">Coupe le conteneur prématurément</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="sim-monitoring">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="panel-divider"></div>
-
-                <!-- SonarQube Options -->
-                <div class="sonar-options">
-                    <div class="switch-item">
-                        <div class="switch-text">
-                            <span class="switch-title">Simuler SonarQube</span>
-                            <span class="switch-desc">Évite de lancer le serveur SonarQube</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="config-sonar-mock" checked>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Center Panel: Pipeline Flow & Execution Status -->
-            <section class="panel flow-panel glass">
-                <div class="panel-header">
-                    <h2><i class="fa-solid fa-diagram-project"></i> Pipeline DevOps</h2>
-                </div>
-
-                <div class="pipeline-flow">
-                    <!-- Steps Timeline -->
-                    <div class="step-card" data-step="COMPILATION">
-                        <div class="step-icon-wrapper">
-                            <i class="fa-solid fa-code"></i>
-                        </div>
-                        <div class="step-details">
-                            <h3>Compilation</h3>
-                            <p>mvnw clean compile</p>
-                        </div>
-                        <div class="step-status">
-                            <span class="status-indicator idle"></span>
-                            <span class="status-label">En attente</span>
-                            <span class="duration">0s</span>
-                        </div>
-                    </div>
-
-                    <div class="step-card" data-step="TESTS">
-                        <div class="step-icon-wrapper">
-                            <i class="fa-solid fa-vial-circle-check"></i>
-                        </div>
-                        <div class="step-details">
-                            <h3>Tests Unitaires</h3>
-                            <p>mvnw test</p>
-                        </div>
-                        <div class="step-status">
-                            <span class="status-indicator idle"></span>
-                            <span class="status-label">En attente</span>
-                            <span class="duration">0s</span>
-                        </div>
-                    </div>
-
-                    <div class="step-card" data-step="SONARQUBE">
-                        <div class="step-icon-wrapper">
-                            <i class="fa-solid fa-magnifying-glass-chart"></i>
-                        </div>
-                        <div class="step-details">
-                            <h3>Analyse SonarQube</h3>
-                            <p>mvnw sonar:sonar</p>
-                        </div>
-                        <div class="step-status">
-                            <span class="status-indicator idle"></span>
-                            <span class="status-label">En attente</span>
-                            <span class="duration">0s</span>
-                        </div>
-                    </div>
-
-                    <div class="step-card" data-step="DOCKER_BUILD">
-                        <div class="step-icon-wrapper">
-                            <i class="fa-brands fa-docker"></i>
-                        </div>
-                        <div class="step-details">
-                            <h3>Docker Build</h3>
-                            <p>docker build</p>
-                        </div>
-                        <div class="step-status">
-                            <span class="status-indicator idle"></span>
-                            <span class="status-label">En attente</span>
-                            <span class="duration">0s</span>
-                        </div>
-                    </div>
-
-                    <div class="step-card" data-step="DEPLOY">
-                        <div class="step-icon-wrapper">
-                            <i class="fa-solid fa-server"></i>
-                        </div>
-                        <div class="step-details">
-                            <h3>Déploiement</h3>
-                            <p>docker run (port 8081)</p>
-                        </div>
-                        <div class="step-status">
-                            <span class="status-indicator idle"></span>
-                            <span class="status-label">En attente</span>
-                            <span class="duration">0s</span>
-                        </div>
-                    </div>
-
-                    <div class="step-card" data-step="MONITORING">
-                        <div class="step-icon-wrapper">
-                            <i class="fa-solid fa-heart-pulse"></i>
-                        </div>
-                        <div class="step-details">
-                            <h3>Surveillance</h3>
-                            <p>actuator/health check</p>
-                        </div>
-                        <div class="step-status">
-                            <span class="status-indicator idle"></span>
-                            <span class="status-label">En attente</span>
-                            <span class="duration">0s</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Right Panel: Log Viewer & AI Diagnostics -->
-            <div class="right-column-grid">
-                
-                <!-- Log Console -->
-                <section class="panel console-panel glass">
-                    <div class="panel-header">
-                        <h2><i class="fa-solid fa-terminal"></i> Console de Sortie</h2>
-                        <div class="console-actions">
-                            <button id="btn-copy-logs" class="btn icon-only" title="Copier les logs">
-                                <i class="fa-regular fa-copy"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="terminal-body" id="console-logs">
-                        <div class="terminal-welcome">
-                            [CODIX DEVOPS CONSOLE] Prêt à démarrer. Lancer le pipeline pour voir la sortie.
-                        </div>
-                    </div>
-                </section>
-
-                <!-- AI Analysis Card -->
-                <section class="panel ai-panel glass" id="ai-panel">
-                    <div class="ai-header">
-                        <div class="ai-logo">
-                            <div class="ai-spark">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                            </div>
-                            <div class="ai-title-text">
-                                <h2>Assistant Diagnostic IA</h2>
-                                <span class="ai-pulsar active" id="ai-pulse"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ai-body" id="ai-analysis-content">
-                        <div class="ai-placeholder">
-                            <i class="fa-solid fa-robot"></i>
-                            <p>L'assistant IA de CODIX surveille l'exécution. En cas d'erreur, son diagnostic apparaîtra instantanément ici pour vous expliquer le problème et vous guider pas à pas dans sa résolution.</p>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-
-        </main>
-    </div>
-
-    <!-- API Key Config Modal -->
-    <div class="modal-overlay" id="config-modal">
-        <div class="modal glass">
-            <div class="modal-header">
-                <h2><i class="fa-solid fa-key"></i> Configuration de l'API Gemini</h2>
-                <button id="btn-close-modal" class="btn icon-only"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="modal-body">
-                <p>Pour activer l'analyse intelligente réelle de vos journaux d'erreurs, insérez votre clé d'API Gemini. Si aucune clé n'est fournie, la plateforme basculera sur un moteur de diagnostic local basé sur des règles.</p>
-                
-                <div class="input-group">
-                    <label for="gemini-api-key">Clé API Gemini</label>
-                    <div class="password-input-wrapper">
-                        <input type="password" id="gemini-api-key" placeholder="AIzaSy...">
-                        <button id="toggle-visibility" class="btn icon-only"><i class="fa-solid fa-eye"></i></button>
-                    </div>
-                    <span class="input-hint">Vous pouvez obtenir une clé gratuite sur <a href="https://aistudio.google.com/" target="_blank">Google AI Studio <i class="fa-solid fa-up-right-from-square"></i></a>.</span>
-                </div>
-                
-                <div id="api-status-indicator" class="api-status-banner">
-                    <i class="fa-solid fa-circle-check"></i> Clé API configurée (active)
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="btn-cancel-config" class="btn secondary">Annuler</button>
-                <button id="btn-save-config" class="btn primary">Enregistrer la Clé</button>
+            <div class="ai-body" id="ai-body-content">
+                <!-- Rempli par JS -->
+                <div class="ai-loader">Analyse des logs en cours par l'IA...</div>
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-left">
-            <span class="footer-brand"><i class="fa-solid fa-microchip-ascii"></i> CODIX DevOps</span>
-            <span class="footer-version">v1.0.0-SNAPSHOT</span>
-        </div>
-        <div class="footer-center">
-            <span>Plateforme CI/CD Intelligente &bull; Powered by <strong>Spring Boot</strong>, <strong>Docker</strong> &amp; <strong>Gemini AI</strong></span>
-        </div>
-        <div class="footer-right">
-            <span class="footer-status">
-                <span class="pulse-dot" style="background:var(--color-success);display:inline-block;"></span>
-                Serveur actif sur port 8080
-            </span>
-        </div>
-    </footer>
 
     <script src="app.js"></script>
+    <style>
+        /* Styles additionnels spécifiques au nouveau layout vertical */
+        .radio-card {
+            display: block;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        .radio-card input[type="radio"] {
+            display: none;
+        }
+        .radio-content {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .radio-card input[type="radio"]:checked + .radio-content {
+            background: rgba(79, 172, 254, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(79, 172, 254, 0.2);
+        }
+        .radio-content .icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+        .radio-content .text {
+            display: flex;
+            flex-direction: column;
+        }
+        .radio-content .desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .pipeline-tracker-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 1rem;
+        }
+        .step-v {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            position: relative;
+            padding-bottom: 2rem;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .step-v:last-child {
+            padding-bottom: 0;
+        }
+        .step-v::before {
+            content: '';
+            position: absolute;
+            left: 17px;
+            top: 35px;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255,255,255,0.1);
+            z-index: 0;
+        }
+        .step-v:last-child::before {
+            display: none;
+        }
+        .step-icon-v {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 2px solid var(--text-muted);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+        .step-content-v {
+            display: flex;
+            flex-direction: column;
+            margin-top: 6px;
+        }
+        .status-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        
+        /* Status styles */
+        .step-v.running { opacity: 1; }
+        .step-v.running .step-icon-v {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            animation: pulse 1.5s infinite;
+        }
+        .step-v.running .status-text { color: var(--primary); }
+        
+        .step-v.success { opacity: 1; }
+        .step-v.success .step-icon-v {
+            border-color: var(--success);
+            background: var(--success);
+            color: #000;
+        }
+        .step-v.success .status-text { color: var(--success); }
+        .step-v.success::before { background: var(--success); }
+        
+        .step-v.fail { opacity: 1; }
+        .step-v.fail .step-icon-v {
+            border-color: var(--danger);
+            background: var(--danger);
+            color: #fff;
+            box-shadow: 0 0 20px var(--danger);
+            animation: shake 0.5s;
+        }
+        .step-v.fail .status-text { color: var(--danger); font-weight: bold; }
+    </style>
 </body>
 </html>
